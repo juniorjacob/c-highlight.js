@@ -26,11 +26,21 @@ export default function(hljs) {
   ')';
   var CPP_SYMBOLS = {
     className: 'symbol',
-    begin: '::|&&|[*=+%-]'
+    begin: '==|->|::|&&|[*=+%-]'
   };
   var CPP_PRIMITIVE_TYPES = {
     className: 'keyword_type',
-    begin: '\\b[a-z\\d_]*_t\\b'
+    begin: '\\b[a-z\\d_]*_t\\b|__[imp][n61t][t42r]([8136]|)([di246]|)'
+  };
+  var CPP_LOCATION = {
+    className: 'cpp_location',
+    begin: '[a-zA-Z0-9_]+:\n',
+    contains: [
+      {
+        className: 'cpp_location_semicolon',
+        begin: ':'
+      }
+    ]
   };
 
   // https://en.cppreference.com/w/cpp/language/escape
@@ -112,7 +122,7 @@ export default function(hljs) {
   var FUNCTION_TITLE = optional(NAMESPACE_RE) + hljs.IDENT_RE + '\\s*\\(';
 
   var CPP_KEYWORDS = {
-    keyword_type: 'char wchar_t',
+    keyword_type: 'char wchar_t char16_t char32_t int unsigned bool',
     keyword: 'int float while private catch import module export virtual operator sizeof ' +
       'dynamic_cast|10 typedef const_cast|10 const for static_cast|10 union namespace ' +
       'unsigned long volatile static protected bool template mutable if public friend ' +
@@ -134,12 +144,14 @@ export default function(hljs) {
       'printf putchar puts scanf sinh sin snprintf sprintf sqrt sscanf strcat strchr strcmp ' +
       'strcpy strcspn strlen strncat strncmp strncpy strpbrk strrchr strspn strstr tanh tan ' +
       'vfprintf vprintf vsprintf endl initializer_list unique_ptr _Bool complex _Complex imaginary _Imaginary',
-    literal: 'true false nullptr NULL void'
+    literal: 'true false nullptr NULL void',
+    symbol: '== -> :: && * = + % -'
   };
 
   var EXPRESSION_CONTAINS = [
     CPP_PRIMITIVE_TYPES,
     CPP_SYMBOLS,
+    CPP_LOCATION,
     hljs.C_LINE_COMMENT_MODE,
     hljs.C_BLOCK_COMMENT_MODE,
     NUMBERS,
@@ -163,7 +175,8 @@ export default function(hljs) {
         keywords: CPP_KEYWORDS,
         contains: EXPRESSION_CONTAINS.concat(['self']),
         relevance: 0
-      }
+      },
+      CPP_SYMBOLS
     ]),
     relevance: 0
   };
@@ -199,6 +212,7 @@ export default function(hljs) {
           NUMBERS,
           CPP_PRIMITIVE_TYPES,
           CPP_SYMBOLS,
+          CPP_LOCATION,
           // Count matching parentheses.
           {
             begin: /\(/, end: /\)/,
@@ -212,13 +226,15 @@ export default function(hljs) {
               STRINGS,
               NUMBERS,
               CPP_PRIMITIVE_TYPES,
-              CPP_SYMBOLS
+              CPP_SYMBOLS,
+              CPP_LOCATION
             ]
           }
         ]
       },
       CPP_PRIMITIVE_TYPES,
       CPP_SYMBOLS,
+      CPP_LOCATION,
       hljs.C_LINE_COMMENT_MODE,
       hljs.C_BLOCK_COMMENT_MODE,
       PREPROCESSOR
@@ -241,18 +257,22 @@ export default function(hljs) {
       { // containers: ie, `vector <int> rooms (9);`
         begin: '\\b(deque|list|queue|priority_queue|pair|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<', end: '>',
         keywords: CPP_KEYWORDS,
-        contains: ['self', CPP_PRIMITIVE_TYPES]
+        contains: ['self', CPP_PRIMITIVE_TYPES, CPP_SYMBOLS]
       },
       {
-        begin: hljs.IDENT_RE + '::',
-        keywords: CPP_KEYWORDS
+        begin: hljs.IDENT_RE /*+ '::'*/,
+        keywords: CPP_KEYWORDS,
+        contains: [
+          CPP_SYMBOLS
+        ]
       },
       {
         className: 'class',
         beginKeywords: 'class struct', end: /[{;:]/,
         contains: [
           {begin: /</, end: />/, contains: ['self']}, // skip generic stuff
-          hljs.TITLE_MODE
+          hljs.TITLE_MODE,
+          CPP_SYMBOLS
         ]
       }
     ]),
