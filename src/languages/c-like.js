@@ -24,6 +24,10 @@ export default function(hljs) {
     DECLTYPE_AUTO_RE + '|' +
     optional(NAMESPACE_RE) +'[a-zA-Z_]\\w*' + optional(TEMPLATE_ARGUMENT_RE) +
   ')';
+  var CPP_SYMBOLS = {
+    className: 'symbol',
+    begin: '::|&&|[*=+%-]'
+  };
   var CPP_PRIMITIVE_TYPES = {
     className: 'keyword',
     begin: '\\b[a-z\\d_]*_t\\b'
@@ -73,7 +77,7 @@ export default function(hljs) {
     relevance: 0
   };
 
-  var PREPROCESSOR =       {
+  var PREPROCESSOR = {
     className: 'meta',
     begin: /#\s*[a-z]+\b/, end: /$/,
     keywords: {
@@ -98,8 +102,11 @@ export default function(hljs) {
 
   var TITLE_MODE = {
     className: 'title',
-    begin: optional(NAMESPACE_RE) + hljs.IDENT_RE,
-    relevance: 0
+    begin: /*optional(NAMESPACE_RE) +*/ hljs.IDENT_RE,
+    relevance: 0,
+    contains: [
+      CPP_SYMBOLS
+    ]
   };
 
   var FUNCTION_TITLE = optional(NAMESPACE_RE) + hljs.IDENT_RE + '\\s*\\(';
@@ -108,7 +115,7 @@ export default function(hljs) {
     keyword: 'int float while private char char8_t char16_t char32_t catch import module export virtual operator sizeof ' +
       'dynamic_cast|10 typedef const_cast|10 const for static_cast|10 union namespace ' +
       'unsigned long volatile static protected bool template mutable if public friend ' +
-      'do goto auto void enum else break extern using asm case typeid wchar_t ' +
+      'do goto auto enum else break extern using asm case typeid wchar_t ' +
       'short reinterpret_cast|10 default double register explicit signed typename try this ' +
       'switch continue inline delete alignas alignof constexpr consteval constinit decltype ' +
       'concept co_await co_return co_yield requires ' +
@@ -126,11 +133,12 @@ export default function(hljs) {
       'printf putchar puts scanf sinh sin snprintf sprintf sqrt sscanf strcat strchr strcmp ' +
       'strcpy strcspn strlen strncat strncmp strncpy strpbrk strrchr strspn strstr tanh tan ' +
       'vfprintf vprintf vsprintf endl initializer_list unique_ptr _Bool complex _Complex imaginary _Imaginary',
-    literal: 'true false nullptr NULL'
+    literal: 'true false nullptr NULL void'
   };
 
   var EXPRESSION_CONTAINS = [
     CPP_PRIMITIVE_TYPES,
+    CPP_SYMBOLS,
     hljs.C_LINE_COMMENT_MODE,
     hljs.C_BLOCK_COMMENT_MODE,
     NUMBERS,
@@ -167,7 +175,6 @@ export default function(hljs) {
     keywords: CPP_KEYWORDS,
     illegal: /[^\w\s\*&:<>]/,
     contains: [
-
       { // to prevent it from being confused as the function title
         begin: DECLTYPE_AUTO_RE,
         keywords: CPP_KEYWORDS,
@@ -175,7 +182,7 @@ export default function(hljs) {
       },
       {
         begin: FUNCTION_TITLE, returnBegin: true,
-        contains: [TITLE_MODE],
+        contains: [CPP_SYMBOLS, TITLE_MODE],
         relevance: 0
       },
       {
@@ -190,6 +197,7 @@ export default function(hljs) {
           STRINGS,
           NUMBERS,
           CPP_PRIMITIVE_TYPES,
+          CPP_SYMBOLS,
           // Count matching parentheses.
           {
             begin: /\(/, end: /\)/,
@@ -202,12 +210,14 @@ export default function(hljs) {
               ESCAPE_STRINGS,
               STRINGS,
               NUMBERS,
-              CPP_PRIMITIVE_TYPES
+              CPP_PRIMITIVE_TYPES,
+              CPP_SYMBOLS
             ]
           }
         ]
       },
       CPP_PRIMITIVE_TYPES,
+      CPP_SYMBOLS,
       hljs.C_LINE_COMMENT_MODE,
       hljs.C_BLOCK_COMMENT_MODE,
       PREPROCESSOR

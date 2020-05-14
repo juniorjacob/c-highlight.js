@@ -1,4 +1,4 @@
-import { escapeHTML } from './utils';
+import { escapeHTML, get_new_class_name } from './utils';
 
 const SPAN_CLOSE = '</span>';
 const emitsWrappingTags = (node) => {
@@ -23,7 +23,7 @@ export default class HTMLRenderer {
 
     let className = node.kind;
     if (!node.sublanguage) {
-      className = `${this.classPrefix}${className}`;
+      className = `${this.classPrefix}${get_new_class_name(className)}`;
     }
     this.span(className);
   }

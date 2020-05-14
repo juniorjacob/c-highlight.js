@@ -41,7 +41,7 @@ const HLJS = function(hljs) {
   var options = {
     noHighlightRe: /^(no-?highlight)$/i,
     languageDetectRe: /\blang(?:uage)?-([\w-]+)\b/i,
-    classPrefix: 'hljs-',
+    classPrefix: '',
     tabReplace: null,
     useBR: false,
     languages: null,

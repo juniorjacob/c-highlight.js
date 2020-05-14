@@ -2,6 +2,27 @@ export function escapeHTML(value) {
   return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
+var class_replacements = {
+  'string': 's',
+  'keyword': 'k',
+  'escape_string': 'se',
+  'number': 'mh',
+  'literal': 'nb',
+  'symbol': 'o',
+  'comment': 'c1',
+
+  'function': 'f',
+  'params': 'p',
+  'title': 't'
+}
+
+export function get_new_class_name(class_name) {
+  if (class_replacements[class_name])
+    return class_replacements[class_name];
+  else
+    return class_name;
+}
+
 /**
  * performs a shallow merge of multiple objects into one
  *
