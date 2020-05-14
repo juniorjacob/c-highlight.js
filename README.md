@@ -1,4 +1,4 @@
-# c-highlight.js
+# e-highlight.js
 HighlightJS with support for Escape Characters & modified class names.
 
 Languages with Escape Character support:
