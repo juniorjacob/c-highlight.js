@@ -18,7 +18,8 @@ export function concat(...args) {
 }
 
 export function countMatchGroups(re) {
-  return (new RegExp(re.toString() + '|')).exec('').length - 1;
+  var result = (new RegExp(re.toString() + '|')).exec('').length - 1;
+  return result;
 }
 
 export function startsWith(re, lexeme) {

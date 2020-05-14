@@ -34,25 +34,15 @@ export default function(hljs) {
   };
   var CPP_LOCATION = {
     className: 'cpp_location',
-    begin: '[a-zA-Z0-9_]+:\n',
-    contains: [
-      {
-        className: 'cpp_location_semicolon',
-        begin: ':'
-      }
-    ]
+    begin: '[a-zA-Z0-9_]+:\\n'
   };
 
   // https://en.cppreference.com/w/cpp/language/escape
-  // \\ \x \xFF \u2837 \u00323747 \374
+  // \\ \n \t \a \b \f \r \v \' \" | (\\ \x \xFF \u2837 \u00323747 \374)
   var CHARACTER_ESCAPES = '\\\\[\'\"?\\abfnrtv]|\\\\(x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4,8}|[0-7]{3}|\\S)'
   var ESCAPE_STRINGS = {
     className: 'escape_string',
-    variants: [
-      {
-        begin: CHARACTER_ESCAPES
-      }
-    ]
+    begin: CHARACTER_ESCAPES
   };
 
   var STRINGS = {
@@ -151,7 +141,6 @@ export default function(hljs) {
   var EXPRESSION_CONTAINS = [
     CPP_PRIMITIVE_TYPES,
     CPP_SYMBOLS,
-    CPP_LOCATION,
     hljs.C_LINE_COMMENT_MODE,
     hljs.C_BLOCK_COMMENT_MODE,
     NUMBERS,
@@ -252,18 +241,20 @@ export default function(hljs) {
       EXPRESSION_CONTEXT,
       FUNCTION_DECLARATION,
       EXPRESSION_CONTAINS,
+      CPP_LOCATION,
       [
       PREPROCESSOR,
       { // containers: ie, `vector <int> rooms (9);`
         begin: '\\b(deque|list|queue|priority_queue|pair|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<', end: '>',
         keywords: CPP_KEYWORDS,
-        contains: ['self', CPP_PRIMITIVE_TYPES, CPP_SYMBOLS]
+        contains: ['self', CPP_PRIMITIVE_TYPES, CPP_SYMBOLS, CPP_LOCATION]
       },
       {
         begin: hljs.IDENT_RE /*+ '::'*/,
         keywords: CPP_KEYWORDS,
         contains: [
-          CPP_SYMBOLS
+          CPP_SYMBOLS,
+          CPP_LOCATION
         ]
       },
       {
@@ -272,7 +263,8 @@ export default function(hljs) {
         contains: [
           {begin: /</, end: />/, contains: ['self']}, // skip generic stuff
           hljs.TITLE_MODE,
-          CPP_SYMBOLS
+          CPP_SYMBOLS,
+          CPP_LOCATION
         ]
       }
     ]),

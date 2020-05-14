@@ -430,8 +430,10 @@ const HLJS = function(hljs) {
           top.matcher.considerAll();
         }
         const match = top.matcher.exec(codeToHighlight);
-        // console.log("match", match[0], match.rule && match.rule.begin)
-        if (!match) break;
+		if (match) {
+		 //console.log("match", match[0], match.rule && match.rule.begin)
+        }
+		if (!match) break;
 
         const beforeMatch = codeToHighlight.substring(index, match.index);
         const processedCount = processLexeme(beforeMatch, match);
