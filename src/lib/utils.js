@@ -5,6 +5,7 @@ export function escapeHTML(value) {
 var class_replacements = {
   'string': 's',
   'keyword': 'k',
+  'keyword_type': 'kt',
   'escape_string': 'se',
   'number': 'mh',
   'literal': 'nb',
@@ -13,7 +14,8 @@ var class_replacements = {
 
   'function': 'f',
   'params': 'p',
-  'title': 't'
+  'title': 't',
+  'built_in': 'bt'
 }
 
 export function get_new_class_name(class_name) {

@@ -29,7 +29,7 @@ export default function(hljs) {
     begin: '::|&&|[*=+%-]'
   };
   var CPP_PRIMITIVE_TYPES = {
-    className: 'keyword',
+    className: 'keyword_type',
     begin: '\\b[a-z\\d_]*_t\\b'
   };
 
@@ -112,10 +112,11 @@ export default function(hljs) {
   var FUNCTION_TITLE = optional(NAMESPACE_RE) + hljs.IDENT_RE + '\\s*\\(';
 
   var CPP_KEYWORDS = {
-    keyword: 'int float while private char char8_t char16_t char32_t catch import module export virtual operator sizeof ' +
+    keyword_type: 'char wchar_t',
+    keyword: 'int float while private catch import module export virtual operator sizeof ' +
       'dynamic_cast|10 typedef const_cast|10 const for static_cast|10 union namespace ' +
       'unsigned long volatile static protected bool template mutable if public friend ' +
-      'do goto auto enum else break extern using asm case typeid wchar_t ' +
+      'do goto auto enum else break extern using asm case typeid ' +
       'short reinterpret_cast|10 default double register explicit signed typename try this ' +
       'switch continue inline delete alignas alignof constexpr consteval constinit decltype ' +
       'concept co_await co_return co_yield requires ' +
@@ -124,7 +125,7 @@ export default function(hljs) {
       'atomic_uchar atomic_short atomic_ushort atomic_int atomic_uint atomic_long atomic_ulong atomic_llong ' +
       'atomic_ullong new throw return ' +
       'and and_eq bitand bitor compl not not_eq or or_eq xor xor_eq',
-    built_in: 'std string wstring cin cout cerr clog stdin stdout stderr stringstream istringstream ostringstream ' +
+    built_in: 'string wstring cin cout cerr clog stdin stdout stderr stringstream istringstream ostringstream ' +
       'auto_ptr deque list queue stack vector map set pair bitset multiset multimap unordered_set ' +
       'unordered_map unordered_multiset unordered_multimap priority_queue make_pair array shared_ptr abort terminate abs acos ' +
       'asin atan2 atan calloc ceil cosh cos exit exp fabs floor fmod fprintf fputs free frexp ' +
