@@ -30,7 +30,7 @@ export default function(hljs) {
   };
   var CPP_PRIMITIVE_TYPES = {
     className: 'keyword_type',
-    begin: '\\b[a-z\\d_]*_t\\b|__[imp][n61t][t42r]([8136]|)([di246]|)'
+    begin: '\\b[a-z\\d_]*_t\\b|__[imp][n61t][t42r]([8136]|)([di246]|)|' + 'STATUS_([A-Z0-9_]+)'
   };
   var CPP_LOCATION = {
     className: 'cpp_location',
@@ -112,7 +112,7 @@ export default function(hljs) {
   var FUNCTION_TITLE = optional(NAMESPACE_RE) + hljs.IDENT_RE + '\\s*\\(';
 
   var CPP_KEYWORDS = {
-    keyword_type: 'char wchar_t char16_t char32_t int unsigned bool',
+    keyword_type: 'char wchar_t char16_t char32_t int unsigned byte DWORD',
     keyword: 'int float while private catch import module export virtual operator sizeof ' +
       'dynamic_cast|10 typedef const_cast|10 const for static_cast|10 union namespace ' +
       'unsigned long volatile static protected bool template mutable if public friend ' +
@@ -124,7 +124,8 @@ export default function(hljs) {
       'atomic_bool atomic_char atomic_schar ' +
       'atomic_uchar atomic_short atomic_ushort atomic_int atomic_uint atomic_long atomic_ulong atomic_llong ' +
       'atomic_ullong new throw return ' +
-      'and and_eq bitand bitor compl not not_eq or or_eq xor xor_eq',
+      'and and_eq bitand bitor compl not not_eq or or_eq xor xor_eq ' +
+      'NTSTATUS',
     built_in: 'string wstring cin cout cerr clog stdin stdout stderr stringstream istringstream ostringstream ' +
       'auto_ptr deque list queue stack vector map set pair bitset multiset multimap unordered_set ' +
       'unordered_map unordered_multiset unordered_multimap priority_queue make_pair array shared_ptr abort terminate abs acos ' +
@@ -134,7 +135,7 @@ export default function(hljs) {
       'printf putchar puts scanf sinh sin snprintf sprintf sqrt sscanf strcat strchr strcmp ' +
       'strcpy strcspn strlen strncat strncmp strncpy strpbrk strrchr strspn strstr tanh tan ' +
       'vfprintf vprintf vsprintf endl initializer_list unique_ptr _Bool complex _Complex imaginary _Imaginary',
-    literal: 'true false nullptr NULL void',
+    literal: 'bool true false nullptr NULL void',
     symbol: '== -> :: && * = + % -'
   };
 
