@@ -11,6 +11,8 @@ var class_replacements = {
   'literal': 'nb',
   'symbol': 'o',
   'comment': 'c1',
+  'cpp_location': 'nl',
+  'cpp_location_semicolon': '',
 
   'function': 'f',
   'params': 'p',
