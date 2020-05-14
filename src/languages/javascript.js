@@ -118,8 +118,8 @@ export default function(hljs) {
         relevance: 10,
         begin: /^\s*['"]use (strict|asm)['"]/
       },
-      hljs.APOS_STRING_MODE,
-      hljs.QUOTE_STRING_MODE,
+      hljs.inherit(hljs.APOS_STRING_MODE, {contains: [ESCAPE_STRINGS]}),
+      hljs.inherit(hljs.QUOTE_STRING_MODE, {contains: [ESCAPE_STRINGS]}),
       HTML_TEMPLATE,
       CSS_TEMPLATE,
       TEMPLATE_STRING,
