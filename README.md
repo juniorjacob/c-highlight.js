@@ -14,3 +14,5 @@ Languages with Escape Character support:
 Escape Character's get put under the class name hljs-escape_string, or escape_string as the keyword.
 
 note: backup-v1 branch keeps old class names, like hljs-keyword, the main branch will replace those with smaller terms
+
+this is used in https://juniorjacob.com/, my website
