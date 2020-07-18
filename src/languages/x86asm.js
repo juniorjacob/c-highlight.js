@@ -138,6 +138,11 @@ export default function(hljs) {
       {
         className: 'meta',
         begin: /^\s*\.[\w_-]+/
+      },
+      // __imp_
+      {
+        className: 'literal',
+        begin: '__imp_[A-Za-z0-9_]+'
       }
     ]
   };

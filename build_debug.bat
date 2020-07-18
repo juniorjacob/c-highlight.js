@@ -1,0 +1,1 @@
+node tools\build.js -n cpp armasm x86asm php go c csharp

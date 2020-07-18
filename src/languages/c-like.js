@@ -26,7 +26,7 @@ export default function(hljs) {
   ')';
   var CPP_SYMBOLS = {
     className: 'symbol',
-    begin: '==|->|::|&&|[*=+%-]'
+    begin: '==|->|::|&&|[*=+%-&]'
   };
   var CPP_PRIMITIVE_TYPES = {
     className: 'keyword_type',
@@ -113,7 +113,7 @@ export default function(hljs) {
 
   var CPP_KEYWORDS = {
     keyword_type: 'char wchar_t char16_t char32_t int unsigned byte DWORD',
-    keyword: 'int float while private catch import module export virtual operator sizeof ' +
+    keyword: 'int float while private catch import module export virtual class operator sizeof ' +
       'dynamic_cast|10 typedef const_cast|10 const for static_cast|10 union namespace ' +
       'unsigned long volatile static protected bool template mutable if public friend ' +
       'do goto auto enum else break extern using asm case typeid ' +
@@ -135,7 +135,13 @@ export default function(hljs) {
       'printf putchar puts scanf sinh sin snprintf sprintf sqrt sscanf strcat strchr strcmp ' +
       'strcpy strcspn strlen strncat strncmp strncpy strpbrk strrchr strspn strstr tanh tan ' +
       'vfprintf vprintf vsprintf endl initializer_list unique_ptr _Bool complex _Complex imaginary _Imaginary',
-    literal: 'bool true false nullptr NULL void',
+    literal: 'bool true false nullptr NULL void ' +
+    'printf malloc memchr ' +
+    'memcpy memcpy_s memset memset_s memmove memmove_s memcmp memcmp_s ' +
+    'strcpy strcpy_s strncpy strncpy_s strcat strcat_s strncat strncat_s ' +
+    'strcmp strcmp_s strcoll strcoll_s strncmp strncmp_s strxfrm strxfrm_s ' +
+    'strchr strchr_s strcspn strcspn_s strrchr strrchr_s strspn strspn_s strstr ' +
+    'strstr_s strtok strtok_s strerror strerror_s strlen strlen_s',
     symbol: '== -> :: && * = + % -'
   };
 
